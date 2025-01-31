@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.socialmedia.socialmediaapp.post.model.entity.Post;
 import org.socialmedia.socialmediaapp.user.model.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,11 +17,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonPropertyOrder({
         "id", "first_name", "last_name", "email",
         "phone_number", "address", "role", "enabled"
@@ -54,6 +57,9 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     private boolean enabled;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Post> posts;
 
     @Builder
     public User(Long id, String email, String firstName, String lastName, String password, Role role, String address, String phoneNumber, boolean enabled) {
