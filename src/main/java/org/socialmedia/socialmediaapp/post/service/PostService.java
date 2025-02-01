@@ -8,4 +8,5 @@ public interface PostService {
 
     void savePost(Post postToSave);
     StatusMessage createPost(NewPostRequest newPostRequest, String authHeader);
+    void likePost(Long postId, String authHeader);
 }
