@@ -51,10 +51,15 @@ public class PostServiceImpl implements PostService {
     public void likePost(Long postId, String authHeader) {
         Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
         User user = userService.getUserByToken(authHeader);
-
         Like like = likeRepository.findByPostAndUser(post, user);
 
-        // Encapsulate this whole logic in a new private method
+        manageLikeOnPost(like, post, user);
+
+        postRepository.save(post);
+    }
+
+    // This method is used to manage the like on a post by a user and update the post like count accordingly 
+    private void manageLikeOnPost(Like like, Post post, User user) {
         if (like != null) {
             post.setLikeCount(post.getLikeCount() - 1);
             likeRepository.delete(like);
@@ -65,8 +70,6 @@ public class PostServiceImpl implements PostService {
             like.setUser(user);
             likeRepository.save(like);
         }
-
-        postRepository.save(post);
     }
 
 
