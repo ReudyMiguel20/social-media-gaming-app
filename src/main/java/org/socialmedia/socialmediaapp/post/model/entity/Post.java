@@ -32,10 +32,6 @@ public class Post {
 
     private String content;
 
-    // This could be used for referencing an external URL
-//    @URL
-//    private String url;
-
     //  For Photo or Video in the post
     private String mediaUrl;
 
