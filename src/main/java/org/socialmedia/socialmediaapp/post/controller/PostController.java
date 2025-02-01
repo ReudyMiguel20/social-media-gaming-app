@@ -32,4 +32,11 @@ public class PostController {
 //        return jwtService.extractUsername(authHeader.substring(7));
 //    }
 
+    @PostMapping("/like/{postId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void likePost(@PathVariable Long postId, @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7);
+        postService.likePost(postId, token);
+    }
+
 }
