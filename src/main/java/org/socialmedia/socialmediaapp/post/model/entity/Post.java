@@ -28,10 +28,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 2, max = 100)
     private String title;
 
-    @Size(max = 1000)
     private String content;
 
     // This could be used for referencing an external URL
@@ -47,7 +45,6 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private PostStatus postStatus;
 
-    @CreationTimestamp
     private LocalDateTime createdAt;
 
     private int likeCount;
@@ -67,7 +64,9 @@ public class Post {
                 ", content='" + content + '\'' +
                 ", mediaUrl='" + mediaUrl + '\'' +
                 ", postType=" + postType +
+                ", postStatus=" + postStatus +
                 ", createdAt=" + createdAt +
+                ", likeCount=" + likeCount +
                 '}';
     }
 
