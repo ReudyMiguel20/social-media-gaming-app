@@ -71,5 +71,5 @@ public class PostServiceImpl implements PostService {
             likeRepository.save(like);
         }
     }
-    
+
 }

@@ -13,6 +13,7 @@ import org.socialmedia.socialmediaapp.user.model.dto.UserUpdateRequest;
 import org.socialmedia.socialmediaapp.user.model.entity.User;
 import org.socialmedia.socialmediaapp.user.model.enums.Role;
 import org.socialmedia.socialmediaapp.user.repository.UserRepository;
+import org.socialmedia.socialmediaapp.user.service.UserProfileService;
 import org.socialmedia.socialmediaapp.user.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final UserProfileService userProfileService;
 
     @Override
     public void saveUser(User user) {
@@ -58,7 +60,10 @@ public class UserServiceImpl implements UserService {
         encodeUserPassword(user);
         boolean isFirstUser = getAllUsers().isEmpty();
         assignRoleToUser(user, isFirstUser);
+
         saveUser(user);
+
+        userProfileService.initiateUserProfile(user);
 
         return user;
     }

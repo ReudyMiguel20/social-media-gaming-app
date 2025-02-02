@@ -61,6 +61,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Post> posts;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private UserProfile userProfile;
+
     @Builder
     public User(Long id, String email, String firstName, String lastName, String password, Role role, String address, String phoneNumber, boolean enabled) {
         this.id = id;
