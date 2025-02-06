@@ -9,6 +9,7 @@ import org.socialmedia.socialmediaapp.user.model.entity.User;
 import org.socialmedia.socialmediaapp.user.model.enums.Role;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
