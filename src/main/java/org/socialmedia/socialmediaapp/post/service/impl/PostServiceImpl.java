@@ -17,6 +17,7 @@ import org.socialmedia.socialmediaapp.post.model.entity.Like;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +58,13 @@ public class PostServiceImpl implements PostService {
 
         postRepository.save(post);
     }
+
+    @Override
+    public Post findPostById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(PostNotFound::new);
+    }
+
 
     // This method is used to manage the like on a post by a user and update the post like count accordingly 
     private void manageLikeOnPost(Like like, Post post, User user) {

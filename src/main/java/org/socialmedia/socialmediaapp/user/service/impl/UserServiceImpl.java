@@ -151,6 +151,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByToken(String token) {
+        token = token.substring(7);
+
         String email = jwtService.extractUsername(token);
         return getUserByEmail(email);
     }

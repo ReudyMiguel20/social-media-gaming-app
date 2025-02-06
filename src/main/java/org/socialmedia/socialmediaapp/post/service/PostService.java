@@ -4,9 +4,13 @@ import org.socialmedia.socialmediaapp.common.model.dto.StatusMessage;
 import org.socialmedia.socialmediaapp.post.model.dto.NewPostRequest;
 import org.socialmedia.socialmediaapp.post.model.entity.Post;
 
+import java.util.Optional;
+
 public interface PostService {
 
     void savePost(Post postToSave);
     StatusMessage createPost(NewPostRequest newPostRequest, String authHeader);
     void likePost(Long postId, String authHeader);
+
+    Post findPostById(Long id);
 }
