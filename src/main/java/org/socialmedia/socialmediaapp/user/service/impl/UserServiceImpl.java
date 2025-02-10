@@ -141,6 +141,12 @@ public class UserServiceImpl implements UserService {
         return userToFind.getId();
     }
 
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(UserNotFound::new);
+    }
+
     private void modifyUserInfo(User user, UserUpdateRequest request) {
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());

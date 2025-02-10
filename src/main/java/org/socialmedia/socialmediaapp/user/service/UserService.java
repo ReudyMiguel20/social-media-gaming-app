@@ -36,6 +36,8 @@ public interface UserService {
 
     Long getUserById(String token);
 
+    User getUserById(Long id);
+
     User getUserByToken(String token);
 
     User getUserInfo(String token);

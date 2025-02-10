@@ -64,6 +64,13 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private UserProfile userProfile;
 
+    @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follower> followers;
+
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follower> following;
+
+
     @Builder
     public User(Long id, String email, String firstName, String lastName, String password, Role role, String address, String phoneNumber, boolean enabled) {
         this.id = id;
