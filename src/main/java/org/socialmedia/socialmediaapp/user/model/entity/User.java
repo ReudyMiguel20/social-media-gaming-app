@@ -25,7 +25,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({
-        "id", "first_name", "last_name", "email",
+        "id", "first_name", "last_name", "email", "username",
         "phone_number", "address", "role", "enabled"
 })
 @Table(name= "users")
@@ -43,6 +43,9 @@ public class User implements UserDetails {
 
     @JsonProperty("last_name")
     private String lastName;
+
+    @Column(unique = true)
+    private String username;
 
     @JsonIgnore
     private String password;

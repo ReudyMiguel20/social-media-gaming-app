@@ -12,12 +12,14 @@ import org.socialmedia.socialmediaapp.post.repository.PostRepository;
 import org.socialmedia.socialmediaapp.post.service.PostService;
 import org.socialmedia.socialmediaapp.user.model.entity.User;
 import org.socialmedia.socialmediaapp.user.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.socialmedia.socialmediaapp.post.model.entity.Like;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +65,11 @@ public class PostServiceImpl implements PostService {
     public Post findPostById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(PostNotFound::new);
+    }
+
+    @Override
+    public Page<Post> searchPosts(String keyword, Pageable pageable) {
+        return postRepository.findByTitleContaining(keyword, pageable);
     }
 
 
