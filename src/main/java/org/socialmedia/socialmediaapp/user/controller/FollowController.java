@@ -8,6 +8,8 @@ import org.socialmedia.socialmediaapp.user.service.FollowerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/follow")
@@ -22,4 +24,23 @@ public class FollowController {
 
         return followerService.followUser(followNewUserDTO, authHeader);
     }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public StatusMessage unfollowUser(@RequestBody FollowNewUserDTO followNewUserDTO, @RequestHeader("Authorization") String authHeader) {
+        return followerService.unfollowUser(followNewUserDTO, authHeader);
+    }
+
+    @GetMapping("/followers/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getFollowers(@PathVariable Long userId) {
+        return followerService.getFollowers(userId);
+    }
+
+    @GetMapping("/following/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getFollowing(@PathVariable Long userId) {
+        return followerService.getFollowing(userId);
+    }
+
 }
