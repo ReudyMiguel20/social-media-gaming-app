@@ -20,6 +20,7 @@ import org.socialmedia.socialmediaapp.post.model.entity.Like;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -72,6 +73,28 @@ public class PostServiceImpl implements PostService {
         return postRepository.findByTitleContaining(keyword, pageable);
     }
 
+    @Override
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
+    @Override
+    public Post getPostById(Long postId) {
+        return postRepository.findById(postId).orElseThrow(PostNotFound::new);
+    }
+
+    @Override
+    public StatusMessage deletePost(Long postId, String token) {
+        User user = userService.getUserByToken(token);
+
+        Post postToDelete = postRepository.findById(postId)
+                .orElseThrow(PostNotFound::new);
+
+        verifyPostOwnership(user, postToDelete);
+
+        return new StatusMessage("Post deleted successfully");
+    }
+
 
     // This method is used to manage the like on a post by a user and update the post like count accordingly 
     private void manageLikeOnPost(Like like, Post post, User user) {
@@ -84,6 +107,14 @@ public class PostServiceImpl implements PostService {
             like.setPost(post);
             like.setUser(user);
             likeRepository.save(like);
+        }
+    }
+
+    private void verifyPostOwnership(User user, Post post) {
+        if (Objects.equals(user.getId(), post.getUser().getId())) {
+            postRepository.delete(post);
+        } else {
+            throw new RuntimeException("Not the post owner");
         }
     }
 

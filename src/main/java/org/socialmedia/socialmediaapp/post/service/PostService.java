@@ -18,4 +18,10 @@ public interface PostService {
     Post findPostById(Long id);
 
     Page<Post> searchPosts(String keyword, Pageable pageable);
+
+    List<Post> getAllPosts();
+
+    Post getPostById(Long postId);
+
+    StatusMessage deletePost(Long postId, String token);
 }
